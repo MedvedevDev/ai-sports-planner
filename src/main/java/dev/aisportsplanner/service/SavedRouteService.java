@@ -25,7 +25,7 @@ public class SavedRouteService {
         SavedRouteEntity entity = new SavedRouteEntity(name, route);
         SavedRouteEntity savedEntity = savedRouteRepository.save(entity);
 
-        return toResponse(savedEntity);
+        return saveRouteResponse(savedEntity);
     }
 
      // Finds every saved route and converts it to an API response
@@ -33,14 +33,21 @@ public class SavedRouteService {
         List<SavedRouteResponse> responses = new ArrayList<>();
 
         for (SavedRouteEntity entity : savedRouteRepository.findAll()) {
-            responses.add(toResponse(entity));
+            responses.add(saveRouteResponse(entity));
         }
 
         return  responses;
      }
 
+     // Finds route by ID and converts it to an API response
+     public SavedRouteResponse findById(Long id) {
+        SavedRouteEntity entity = savedRouteRepository.findById(id).orElseThrow(() -> new SavedRouteNotFoundException(id));
+
+        return saveRouteResponse(entity);
+     }
+
     // Copies the public route details from a database entity into a response DTO
-     private SavedRouteResponse toResponse(SavedRouteEntity entity){
+     private SavedRouteResponse saveRouteResponse(SavedRouteEntity entity){
         return new SavedRouteResponse(
             entity.getId(),
             entity.getName(),
