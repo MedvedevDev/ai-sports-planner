@@ -6,6 +6,7 @@ import dev.aisportsplanner.persistence.entity.SavedRouteEntity;
 import dev.aisportsplanner.persistence.repository.SavedRouteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Handles the application logic for saving routes
@@ -24,12 +25,28 @@ public class SavedRouteService {
         SavedRouteEntity entity = new SavedRouteEntity(name, route);
         SavedRouteEntity savedEntity = savedRouteRepository.save(entity);
 
-        return new SavedRouteResponse(
-            savedEntity.getId(),
-            savedEntity.getName(),
-            savedEntity.getDistanceKm(),
-            savedEntity.getRoutePoints()
-        );
+        return toResponse(savedEntity);
     }
+
+     // Finds every saved route and converts it to an API response
+     public List<SavedRouteResponse> findAll() {
+        List<SavedRouteResponse> responses = new ArrayList<>();
+
+        for (SavedRouteEntity entity : savedRouteRepository.findAll()) {
+            responses.add(toResponse(entity));
+        }
+
+        return  responses;
+     }
+
+    // Copies the public route details from a database entity into a response DTO
+     private SavedRouteResponse toResponse(SavedRouteEntity entity){
+        return new SavedRouteResponse(
+            entity.getId(),
+            entity.getName(),
+            entity.getDistanceKm(),
+            entity.getRoutePoints()
+        );
+     }
 
 }

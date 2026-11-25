@@ -3,11 +3,13 @@ package dev.aisportsplanner.api;
 import dev.aisportsplanner.service.SavedRouteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 // Provides HTTP endpoints for saving routes
 @RestController 
@@ -27,4 +29,9 @@ public class SavedRouteController {
         return savedRouteService.save(request.name(), request.points());
     }
 
+    // Returns all saved routes
+    @GetMapping 
+    public List<SavedRouteResponse> findAll() {
+        return savedRouteService.findAll();
+    }
 }

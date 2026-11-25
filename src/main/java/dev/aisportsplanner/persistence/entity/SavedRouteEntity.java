@@ -52,9 +52,6 @@ public class SavedRouteEntity {
                     throw new IllegalArgumentException("Route name must contain 1 to 100 characters");
             }
         
-        // if(route == null) {
-        //     throw new IllegalArgumentException("Route is required");
-        // }
         Route checkedRoute = Objects.requireNonNull(route, "Route is required");
         this.name = checkedName;
         this.distanceKm = BigDecimal.valueOf(checkedRoute.distanceKm());
