@@ -59,7 +59,7 @@ public class SavedRouteEntity {
         
     }
 
-        // Returns the ID assigned by the database
+    // Returns the ID assigned by the database
     public Long getId() {
         return id;
     }
@@ -82,6 +82,16 @@ public class SavedRouteEntity {
     // Returns the creation time after the entity has been loaded from the database
     public OffsetDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    // Changes the name of an already saved route
+    public void rename(String name) {
+        String checkedName = name == null ? "" : name.trim();
+        if (checkedName.isEmpty() || checkedName.length() > 100) {
+            throw new IllegalArgumentException("Route name must contain 1 to 100 characters");
+        }
+
+        this.name = checkedName;
     }
     
 }

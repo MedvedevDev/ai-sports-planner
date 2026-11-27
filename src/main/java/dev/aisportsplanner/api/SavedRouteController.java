@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -40,5 +41,14 @@ public class SavedRouteController {
     @GetMapping("/{id}")
     public SavedRouteResponse findById(@PathVariable Long id) {
         return savedRouteService.findById(id);
+    }
+
+    // Changes the name of one saved route
+    @PutMapping("/{id}")
+    public SavedRouteResponse updateName(
+        @PathVariable Long id,
+        @Valid @RequestBody UpdateRouteNameRequest request
+    ) {
+        return savedRouteService.updateName(id, request.name());
     }
 }

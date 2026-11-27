@@ -46,6 +46,18 @@ public class SavedRouteService {
         return saveRouteResponse(entity);
      }
 
+     // Finds a saved route, changes its name, and returns it
+     public SavedRouteResponse updateName(Long id, String name) {
+        SavedRouteEntity entity = savedRouteRepository.findById(id)
+            .orElseThrow(() -> new SavedRouteNotFoundException(id));
+        
+        entity.rename(name);
+
+        SavedRouteEntity updatedEntity = savedRouteRepository.save(entity);
+
+        return saveRouteResponse(updatedEntity);
+     }
+
     // Copies the public route details from a database entity into a response DTO
      private SavedRouteResponse saveRouteResponse(SavedRouteEntity entity){
         return new SavedRouteResponse(
